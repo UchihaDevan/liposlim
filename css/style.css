@@ -1904,7 +1904,11 @@ body[style*="background-color: #19150C"] #comments-root {
    #comments-root {
       padding: 20px;
    }
+   #comments-root .cb-body {
+       padding: 8px 12px;
+   }
 }
+
 
 
 
