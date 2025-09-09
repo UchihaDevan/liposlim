@@ -1939,6 +1939,10 @@ body[style*="background-color: #19150C"] #comments-root {
    .cb-replies {
       margin-left: 0;
    }
+
+   .cb-item {
+      gap: 0;
+   }
 }
 
 /* evita corte de conteúdo por palavras/URLs muito longas */
@@ -1952,6 +1956,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
 
 
 
