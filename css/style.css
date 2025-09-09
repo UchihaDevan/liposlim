@@ -1919,162 +1919,40 @@ body[style*="background-color: #19150C"] #comments-root {
    }
 }
 
-/* ================================
-   MOBILE — Comentários
-   Colar ao final do CSS
-   ================================ */
-@media (max-width: 640px) {
-   .topo-1, .container {
-      padding: 20px;
-   }
 
-   
-  /* Espaçamento seguro em laterais (iOS notch etc.) */
-  #comments,
+/* --- Correções para a área de comentários no mobile --- */
+@media (max-width: 768px) {
+  /* devolve os gutters no container desta seção */
+  .topo-1 .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* garante respiro extra no card de comentários */
   #comments-root {
-    padding-left: max(12px, env(safe-area-inset-left));
-    padding-right: max(12px, env(safe-area-inset-right));
-  }
-
-  /* --- Grid vira 1 coluna --- */
-  .comment-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px; /* um pouco menor no mobile */
-  }
-
-  /* --- Cartões (modo cards) --- */
-  .comment-card {
-    padding: 12px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0,0,0,.05);
-  }
-
-  .comment-head {
-    gap: 10px;
-  }
-
-  .avatar {
-    width: 48px;
-    height: 48px;
-  }
-
-  .user-name {
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  blockquote {
-    margin: .25rem 0 0;
-    line-height: 1.45;
-    font-size: .95rem;
-  }
-
-  /* --- Componente estilo "chat-bubble" (#comments-root) --- */
-  #comments-root {
-    padding: 12px; /* já existia, reforço aqui pro breakpoint de 640px */
+    margin-left: 12px;
+    margin-right: 12px;
+    padding: 14px;           /* já tinha 12px, mantive confortável */
     border-radius: 12px;
   }
 
-  #comments-root .cb-title {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-
-  .cb-new {
-    gap: 10px;
-  }
-
-  .cb-avatar {
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-    border: 1px solid var(--cb-border);
-  }
-
-  .cb-form .cb-row {
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-
-  .cb-form input[type="text"] {
-    height: 40px;
-    font-size: .9rem;
-    padding: 0 12px;
-  }
-
-  .cb-form textarea {
-    min-height: 88px;
-    font-size: .95rem;
-    padding: 10px 12px;
-  }
-
-  .cb-item {
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .cb-bubble {
-    padding: 10px 12px;
-    border-radius: 12px;
-  }
-
-  .cb-name {
-    font-size: .95rem;
-  }
-
-  .cb-text {
-    font-size: .95rem;
-    line-height: 1.5;
-    overflow-wrap: anywhere;   /* evita overflow em palavras longas/links */
-    word-break: break-word;
-  }
-
-  .cb-meta {
-    font-size: .8rem;
-    gap: 10px;
-  }
-
-  .cb-meta button {
-    padding: 6px 8px;          /* alvos de toque maiores */
-    border-radius: 8px;
-  }
-
-  .cb-likes {
-    padding: 3px 8px;
-    gap: 6px;
-  }
-
-  .cb-replies {
-    margin-left: 44px;         /* indentação menor no mobile */
-    margin-top: 8px;
-  }
-
-  /* --- Ajustes gerais de tipografia no mobile --- */
-  #comments h2,
-  #comments-root .cb-title {
-    letter-spacing: .2px;
-  }
-
-  /* --- Acessibilidade e performance --- */
-  .avatar img,
-  .cb-avatar img {
-    object-fit: cover;
-  }
-
-  /* Evita que imagens anexadas estourem o layout */
-  .cb-bubble img,
-  .comment-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
+  /* já existem estes dois, só deixando explícito aqui */
+  #comments-root .cb-item { flex-direction: column; }
+  #comments-root .cb-body { padding: 8px 12px; }
 }
 
-/* Reduz animações no mobile quando usuário prefere menos movimento */
-@media (prefers-reduced-motion: reduce) {
-  .comment-card:hover { transform: none; box-shadow: 0 4px 14px rgba(0,0,0,.04); }
+/* evita corte de conteúdo por palavras/URLs muito longas */
+#comments-root, #comments-root * {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
+
+/* torna mídia responsiva para não estourar a largura no mobile */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
 
 
 
