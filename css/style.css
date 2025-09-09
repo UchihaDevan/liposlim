@@ -1924,6 +1924,11 @@ body[style*="background-color: #19150C"] #comments-root {
    Colar ao final do CSS
    ================================ */
 @media (max-width: 640px) {
+   .topo-1, .container {
+      padding: 20px;
+   }
+
+   
   /* Espaçamento seguro em laterais (iOS notch etc.) */
   #comments,
   #comments-root {
@@ -2070,6 +2075,7 @@ body[style*="background-color: #19150C"] #comments-root {
 @media (prefers-reduced-motion: reduce) {
   .comment-card:hover { transform: none; box-shadow: 0 4px 14px rgba(0,0,0,.04); }
 }
+
 
 
 
