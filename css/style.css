@@ -1937,7 +1937,7 @@ body[style*="background-color: #19150C"] #comments-root {
   #comments-root .cb-body { padding: 8px 12px; }
 
    .cb-replies {
-      margin-left: 30px;
+      margin-left: 0;
    }
 }
 
@@ -1952,6 +1952,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
 
 
 
