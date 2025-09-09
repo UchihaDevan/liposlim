@@ -1936,8 +1936,6 @@ body[style*="background-color: #19150C"] #comments-root {
     border-radius: 12px;
   }
 
-  /* já existem estes dois, só deixando explícito aqui */
-  #comments-root .cb-item { flex-direction: column; }
   #comments-root .cb-body { padding: 8px 12px; }
 }
 
@@ -1952,6 +1950,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
 
 
 
