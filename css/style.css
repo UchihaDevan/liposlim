@@ -1897,4 +1897,28 @@ blockquote footer {
 /* Em telas escuras do site, mantenha contraste do bloco */
 body[style*="background-color: #19150C"] #comments-root {
    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+
+}
+
+@media screen and (max-width: 768px) {
+   #comments-root {
+       padding: 12px;
+   }
+
+   #comments-root .cb-title {
+       font-size: 1.25rem;
+   }
+
+   #comments-root .cb-form input[type="text"],
+   #comments-root .cb-form textarea {
+       font-size: .875rem;
+   }
+
+   #comments-root .cb-item {
+       flex-direction: column;
+   }
+
+   #comments-root .cb-body {
+       padding: 8px 12px;
+   }
 }
