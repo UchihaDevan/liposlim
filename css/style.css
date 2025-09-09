@@ -1930,8 +1930,6 @@ body[style*="background-color: #19150C"] #comments-root {
 
   /* garante respiro extra no card de comentários */
   #comments-root {
-    margin-left: 12px;
-    margin-right: 12px;
     padding: 14px;           /* já tinha 12px, mantive confortável */
     border-radius: 12px;
   }
@@ -1950,6 +1948,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
 
 
 
