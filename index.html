@@ -1,0 +1,324 @@
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Lipo Slim</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <link rel="shortcut icon" href="images/favicon.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- AOS Animation -->
+  <link rel="stylesheet" href="css/aos.css">
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>
+    setTimeout(function () {
+      fbq('track', 'View_5min');
+    }, 5 * 60 * 1000);
+    setTimeout(function () {
+      fbq('track', 'View_10min');
+    }, 10 * 60 * 1000);
+    setTimeout(function () {
+      fbq('track', 'View_20min');
+    }, 20 * 60 * 1000);
+    setTimeout(function () {
+      fbq('track', 'View_30min');
+    }, 30 * 60 * 1000);
+  </script>
+
+</head>
+
+<body style="background-color: #19150C;">
+  <header>
+    <section class="topo-0">
+
+      <div class="container">
+
+        <h2 class="titulo"><span style="color: #F3CF3D;">Attention : </span>Cette présentation ne sera disponible que jusqu'à la fin de la journée.</h2>
+      </div>
+
+      </div>
+
+    </section>
+  </header>
+  <main style="padding: 20px;">
+
+    <section class="topo-1">
+
+      <div class="container">
+
+
+        <img src="https://placehold.co/600x400?text=VSL aqui" alt="">
+
+        <div id="comments-root" class="mt-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h3 class="cb-title">Commentaires <span class="cb-count" id="cb-count"></span></h3>
+          </div>
+
+          <!-- Novo comentário -->
+          <div class="cb-new">
+            <div class="cb-avatar" id="cb-my-avatar" aria-label="Avatar de l'utilisateur">👤</div>
+            <div class="cb-form w-100">
+              <div class="cb-row">
+                <input type="text" id="cb-name" maxlength="40" placeholder="Écrivez votre nom (optionnel)">
+                <!-- Botão e input de upload removidos -->
+              </div>
+              <textarea id="cb-text" maxlength="500" placeholder="Ajouter un commentaire..."></textarea>
+              <div class="text-end mt-2">
+                <button class="btn btn-primary" id="cb-submit">Commenter</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lista -->
+          <div id="comments-list" class="cb-list"></div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  
+  <script>
+    (function () {
+      const STORAGE_KEY = 'liposlim_comments_v2';
+      const AVATAR_KEY = 'liposlim_avatar_v1';
+      const listEl = document.getElementById('comments-list');
+      const countEl = document.getElementById('cb-count');
+      const nameEl = document.getElementById('cb-name');
+      const textEl = document.getElementById('cb-text');
+      const submitEl = document.getElementById('cb-submit');
+      const myAvatar = document.getElementById('cb-my-avatar');
+
+      // Utils
+      const esc = (s) => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+      const nowIso = () => new Date().toISOString();
+
+      function relTime(iso) {
+        const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+        if (diff < 60) return 'agora';
+        if (diff < 3600) return Math.floor(diff / 60) + 'min';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h';
+        return Math.floor(diff / 86400) + 'd';
+      }
+
+      // Storage
+      function save(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+      function load() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) { }
+        const seed = [
+          {
+            id: 1, name: 'Jean Dupont',
+            text: 'Que bien que me quedé hasta el final, Dr; sus consejos me están ayudando mucho.',
+            date: new Date(Date.now() - 1000 * 60 * 24).toISOString(), likes: 86, avatar: '',
+            replies: [
+              { id: 11, name: 'Carlos Enrique Salazar', text: '¿Funciona mismo? Me quedo con el pie atrás.', date: new Date(Date.now() - 1000 * 60 * 70).toISOString(), likes: 13, avatar: '' },
+              { id: 12, name: 'Diego Martínez López', text: 'Cm g funcionó, me sentí con más disposición.', date: new Date(Date.now() - 1000 * 60 * 55).toISOString(), likes: 2, avatar: '' }
+            ]
+          },
+          {
+            id: 2, name: 'Sebastián Martínez',
+            text: 'PÓNGANSE ATENCIÓN, vean el video hasta el final, realmente valió la pena.',
+            date: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), likes: 90, avatar: '',
+            replies: [
+              { id: 21, name: 'Juan Castillo', text: 'Muchas gracias, ¡qué bueno que vi hasta el final!', date: new Date(Date.now() - 1000 * 60 * 120).toISOString(), likes: 13, avatar: '' },
+              { id: 22, name: 'andrés lopez', text: 'Estaba en duda pero también vi hasta el final y valió la pena, gracias', date: new Date(Date.now() - 1000 * 60 * 95).toISOString(), likes: 75, avatar: '' }
+            ]
+          },
+          {
+            id: 3, name: 'Ramon Salvatori',
+            text: "Cela a fonctionné pour moi et ma femme, un ami nous l’a recommandé et notre libido a augmenté, cela nous a beaucoup aidés.",
+            date: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(), likes: 49, avatar: ''
+          }
+        ];
+        save(seed); return seed;
+      }
+      let comments = load();
+
+      // Avatar pessoal (upload)
+      function loadMyAvatar() {
+        const data = localStorage.getItem(AVATAR_KEY);
+        if (data) { myAvatar.innerHTML = '<img alt="avatar" src="' + data + '">'; }
+      }
+      loadMyAvatar();
+
+      // Render
+      function render() {
+        // contador
+        const total = comments.reduce((acc, c) => acc + 1 + (c.replies ? c.replies.length : 0), 0);
+        countEl.textContent = total ? `(${total})` : '';
+        // lista
+        listEl.innerHTML = '';
+        const sorted = [...comments].sort((a, b) => new Date(b.date) - new Date(a.date));
+        sorted.forEach(c => listEl.appendChild(renderItem(c, false)));
+      }
+
+      function avatarHtml(src, name) {
+        if (src) return `<div class="cb-avatar"><img alt="avatar de ${esc(name || '')}" src="${esc(src)}"></div>`;
+        // iniciais
+        const ini = (name || '').trim().split(/\s+/).slice(0, 2).map(p => p[0]?.toUpperCase() || '').join('');
+        return `<div class="cb-avatar" title="${esc(name || '')}">${ini || '👤'}</div>`;
+      }
+
+      function renderItem(c, isReply) {
+        const wrap = document.createElement('div');
+        wrap.className = 'cb-item';
+        wrap.innerHTML = `
+      ${avatarHtml(c.avatar, c.name)}
+      <div class="cb-body">
+        <div class="cb-bubble">
+          <div class="cb-name">${esc(c.name || 'Anônimo')}</div>
+          <p class="cb-text">${esc(c.text)}</p>
+        </div>
+        <div class="cb-meta">
+          <button class="cb-like-btn"><i class="bi bi-hand-thumbs-up"></i> Like</button>
+          <button class="cb-reply-btn"><i class="bi bi-chat-text"></i> Reply</button>
+          <span>${relTime(c.date)}</span>
+          <span class="cb-likes"><i class="bi bi-hand-thumbs-up-fill"></i> <b class="cb-like-qty">${c.likes || 0}</b></span>
+        </div>
+        <div class="cb-replies"></div>
+      </div>
+    `;
+
+        // respostas existentes
+        const repliesEl = wrap.querySelector('.cb-replies');
+        if (c.replies && c.replies.length) {
+          c.replies.sort((a, b) => new Date(a.date) - new Date(b.date))
+            .forEach(r => repliesEl.appendChild(renderItem(r, true)));
+        }
+
+        // like
+        wrap.querySelector('.cb-like-btn').addEventListener('click', () => {
+          c.likes = (c.likes || 0) + 1; save(comments);
+          wrap.querySelector('.cb-like-qty').textContent = c.likes;
+        });
+
+        // reply editor (inline)
+        const replyBtn = wrap.querySelector('.cb-reply-btn');
+        replyBtn.addEventListener('click', () => {
+          const existent = wrap.querySelector('.cb-reply-editor');
+          if (existent) { existent.remove(); return; }
+          const editor = document.createElement('div');
+          editor.className = 'cb-reply-editor';
+          editor.innerHTML = `
+        ${avatarHtml(localStorage.getItem(AVATAR_KEY) || '', nameEl.value || '')}
+        <div class="flex-grow-1">
+          <textarea class="form-control" rows="2" maxlength="300" placeholder="Escrever uma resposta..."></textarea>
+          <div class="text-end mt-2">
+            <button class="btn btn-sm btn-secondary me-2">Cancelar</button>
+            <button class="btn btn-sm btn-primary">Responder</button>
+          </div>
+        </div>
+      `;
+          repliesEl.prepend(editor);
+          const [btnCancel, btnSend] = editor.querySelectorAll('button');
+          btnCancel.addEventListener('click', () => editor.remove());
+          btnSend.addEventListener('click', () => {
+            const ta = editor.querySelector('textarea');
+            const txt = ta.value.trim();
+            if (!txt) return ta.focus();
+            const reply = {
+              id: Date.now(),
+              name: (nameEl.value.trim() || 'Anônimo'),
+              text: txt, date: nowIso(), likes: 0,
+              avatar: localStorage.getItem(AVATAR_KEY) || ''
+            };
+            c.replies = c.replies || [];
+            c.replies.push(reply);
+            save(comments);
+            repliesEl.appendChild(renderItem(reply, true));
+            editor.remove();
+            render(); // atualiza contador
+          });
+        });
+
+        // margem das respostas
+        if (isReply) { wrap.style.marginTop = '10px'; }
+        return wrap;
+      }
+
+      // Novo comentário
+      submitEl.addEventListener('click', () => {
+        const text = textEl.value.trim();
+        if (!text) { textEl.focus(); return; }
+        const newC = {
+          id: Date.now(),
+          name: nameEl.value.trim() || 'Anônimo',
+          text, date: nowIso(), likes: 0,
+          avatar: localStorage.getItem(AVATAR_KEY) || '',
+          replies: []
+        };
+        comments.push(newC);
+        save(comments);
+        textEl.value = ''; // limpa
+        render();
+      });
+
+      // Inicializa
+      render();
+    })();
+  </script>
+
+  <script>
+    (function () {
+
+      // === BOTÃO APÓS 30s ABAIXO DA SEÇÃO DE COMENTÁRIOS ===
+      function showDelayedButton() {
+        // evita duplicar se o timer rodar mais de uma vez
+        if (document.getElementById('delayed-cta-btn')) return;
+
+        const commentsRoot = document.getElementById('comments-root');
+        if (!commentsRoot) return;
+
+        // container visual do botão
+        const wrap = document.createElement('div');
+        wrap.className = 'text-center mt-4';
+
+        // o botão em si (estilizado com Bootstrap)
+        const btn = document.createElement('a');
+        btn.id = 'delayed-cta-btn';
+        btn.className = 'btn btn-warning btn-lg';
+        btn.href = '#'; // <-- troque para o seu link de destino
+        btn.textContent = 'Voir l’offre'; // texto do botão (ajuste como quiser)
+
+        // (opcional) rastreamento ao clicar
+        btn.addEventListener('click', function () {
+          try { fbq && fbq('trackCustom', 'DelayedCTA_Click'); } catch (e) { }
+        });
+
+        wrap.appendChild(btn);
+
+        // insere DEPOIS da seção de comentários
+        commentsRoot.insertAdjacentElement('afterend', wrap);
+      }
+
+      // agenda para 30 segundos após o carregamento
+      setTimeout(showDelayedButton, 30 * 1000);
+      // === FIM: BOTÃO APÓS 30s ===
+    })();
+  </script>
+
+
+</body>
+
+</html>
