@@ -1902,8 +1902,9 @@ body[style*="background-color: #19150C"] #comments-root {
 
 @media screen and (max-width: 768px) {
    #comments-root {
-      margin: 20px;
+      padding: 20px;
    }
 }
+
 
 
