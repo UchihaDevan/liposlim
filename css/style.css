@@ -1943,6 +1943,11 @@ body[style*="background-color: #19150C"] #comments-root {
    .cb-item {
       gap: 0;
    }
+
+   .cb-meta {
+      font-size: .6rem;
+   }
+   .
 }
 
 /* evita corte de conteúdo por palavras/URLs muito longas */
@@ -1956,6 +1961,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
 }
+
 
 
 
